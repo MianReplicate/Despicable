@@ -57,7 +57,7 @@ internal static class HarmonyPatch_LovinVisual_HealthEvents
         LovinVisualRuntime.SyncPawn(pawn, force: true, refreshVisuals: false);
         LovinVisualRuntime.NotifyPotentialRenderStateChanged(pawn);
 
-        if (IntegrationGuards.IsGenderWorksLoaded())
+        if (IntegrationGuards.IsGenderWorksLoaded() || IntegrationGuards.IsSimpleTransLoaded())
             pawn.TryGetComp<CompAnatomyBootstrap>()?.NotifyPotentialAnatomyChange();
     }
 }

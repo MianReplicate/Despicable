@@ -116,5 +116,5 @@ internal static class IntegrationGuards
         => ModsConfig.IsActive("LovelyDovey.Sex.WithRosaline");
 
     internal static bool IsSimpleTransLoaded()
-        => ModsConfig.IsActive("runaway.simpletrans");
+        => ModsConfig.IsActive("Runaway.SimpleTrans");
 }
