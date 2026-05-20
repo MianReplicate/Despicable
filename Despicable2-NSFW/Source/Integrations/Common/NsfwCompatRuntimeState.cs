@@ -1,6 +1,7 @@
 using Despicable.Core.Compatibility;
 using Despicable.NSFW.Integrations.GenderWorks;
 using Despicable.NSFW.Integrations.Intimacy;
+using Despicable.NSFW.Integrations.SimpleTrans;
 
 namespace Despicable.NSFW.Integrations;
 /// <summary>
@@ -12,7 +13,8 @@ internal sealed class NsfwCompatRuntimeState
     private readonly IModCompat[] compatModules =
     {
         new IntimacyCompatModule(),
-        new GenderWorksCompatModule()
+        new GenderWorksCompatModule(),
+        new SimpleTransCompatModule()
     };
 
     private bool isInitialized;

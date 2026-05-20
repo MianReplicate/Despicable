@@ -3,6 +3,7 @@ using RimWorld;
 using Verse;
 using Despicable.NSFW.Integrations;
 using Despicable.NSFW.Integrations.GenderWorks;
+using Despicable.NSFW.Integrations.SimpleTrans;
 
 namespace Despicable;
 internal static class AnatomyResolver
@@ -22,7 +23,14 @@ internal static class AnatomyResolver
             return true;
         }
 
+        // If Gender Works is installed, the user probably wants to prioritize their genitalia system over Simple Trans. Though ideally they really shouldn't have both mods installed.
         if (IntegrationGuards.IsGenderWorksLoaded() && TryResolveFromGenderWorks(pawn, resolved))
+        {
+            parts = ToOrderedList(resolved);
+            return true;
+        }
+
+        if (IntegrationGuards.IsSimpleTransLoaded() && TryResolveFromSimpleTrans(pawn, resolved))
         {
             parts = ToOrderedList(resolved);
             return true;
@@ -64,6 +72,20 @@ internal static class AnatomyResolver
     private static bool TryResolveFromGenderWorks(Pawn pawn, HashSet<AnatomyPartDef> resolved)
     {
         if (!GenderWorksUtil.TryResolveForDespicable(pawn, out bool hasPenis, out bool hasVagina))
+            return false;
+
+        if (hasPenis)
+            AddIfNotNull(resolved, LovinModule_GenitalDefOf.Genital_Penis);
+
+        if (hasVagina)
+            AddIfNotNull(resolved, LovinModule_GenitalDefOf.Genital_Vagina);
+
+        return resolved.Count > 0;
+    }
+
+    private static bool TryResolveFromSimpleTrans(Pawn pawn, HashSet<AnatomyPartDef> resolved)
+    {
+        if (!SimpleTransUtil.TryResolveForDespicable(pawn, out bool hasPenis, out bool hasVagina))
             return false;
 
         if (hasPenis)
